@@ -27,7 +27,16 @@ async def on_ready():
     return await bot.change_presence(game=discord.Game(name="by D1R0"))
 
 @bot.event
-async def on_message(message):
-    print(str(message.author)+":"+message.content)
+async def on_member_join(member):
+    channel = member.server.get_channel("495333995697930251")
+    fmt = '{0.mention}, Bun venit in **{1.name}.**'
+    await bot.send_message(channel, fmt.format(member, member.server))
+
+@bot.event
+async def on_member_remove(member):
+    channel = member.server.get_channel("495333995697930251")
+    fmt = '{0.mention} tocmai a parasit **{1.name}**'
+    await bot.send_message(channel, fmt.format(member, member.server))
+  
 
 bot.run(str(os.environ.get("BOT_TOKEN")))
